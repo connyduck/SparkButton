@@ -15,9 +15,9 @@
 package at.connyduck.sparkbutton;
 
 import android.content.Context;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.Px;
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.Px;
 
 import at.connyduck.sparkbutton.helpers.Utils;
 

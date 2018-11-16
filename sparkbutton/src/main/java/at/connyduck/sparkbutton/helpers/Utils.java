@@ -16,7 +16,7 @@ package at.connyduck.sparkbutton.helpers;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.DisplayMetrics;
 
 public class Utils {
