@@ -102,8 +102,7 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
         int dotsSize = (int) (imageSize * DOTVIEW_SIZE_FACTOR);
 
         dotsView = new DotsView(getContext());
-        LayoutParams dotsViewLayoutParams = new LayoutParams(dotsSize, dotsSize);
-        dotsViewLayoutParams.gravity = Gravity.CENTER;
+        LayoutParams dotsViewLayoutParams = new LayoutParams(dotsSize, dotsSize, Gravity.CENTER);
         dotsView.setLayoutParams(dotsViewLayoutParams);
 
         dotsView.setColors(secondaryColor, primaryColor);
@@ -112,8 +111,7 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
         addView(dotsView);
 
         circleView = new CircleView(getContext());
-        LayoutParams circleViewLayoutParams = new LayoutParams(circleSize, circleSize);
-        circleViewLayoutParams.gravity = Gravity.CENTER;
+        LayoutParams circleViewLayoutParams = new LayoutParams(circleSize, circleSize, Gravity.CENTER);
         circleView.setLayoutParams(circleViewLayoutParams);
 
         circleView.setColors(secondaryColor, primaryColor);
@@ -121,8 +119,7 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
         addView(circleView);
 
         imageView = new AppCompatImageView(getContext());
-        LayoutParams imageViewLayoutParams = new LayoutParams(imageSize, imageSize);
-        imageViewLayoutParams.gravity = Gravity.CENTER;
+        LayoutParams imageViewLayoutParams = new LayoutParams(imageSize, imageSize, Gravity.CENTER);
         imageView.setLayoutParams(imageViewLayoutParams);
 
         addView(imageView);
