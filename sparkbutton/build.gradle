@@ -5,7 +5,6 @@ group = 'com.github.connyduck'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "28.0.3"
 
     defaultConfig {
         minSdkVersion 19
@@ -24,7 +23,9 @@ android {
     }
 
     libraryVariants.all {
-        it.generateBuildConfig.enabled = false
+        it.generateBuildConfigProvider.configure {
+            it.enabled = false
+        }
     }
 }
 
