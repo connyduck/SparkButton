@@ -76,7 +76,6 @@ public class CircleView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
         canvas.drawCircle(getWidth() / 2, getHeight() / 2, outerCircleRadiusProgress * maxCircleSize, circlePaint);
         canvas.drawCircle(getWidth() / 2, getHeight() / 2, innerCircleRadiusProgress * (maxCircleSize+1), maskPaint);
     }
