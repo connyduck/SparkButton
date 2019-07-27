@@ -39,8 +39,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import at.connyduck.sparkbutton.helpers.CircleView;
-import at.connyduck.sparkbutton.helpers.DotsView;
+import at.connyduck.sparkbutton.helpers.SparkAnimationView;
 import at.connyduck.sparkbutton.helpers.Utils;
 
 @SuppressWarnings("unused")
@@ -50,9 +49,8 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
     private static final OvershootInterpolator OVERSHOOT_INTERPOLATOR = new OvershootInterpolator(4);
 
     private static final int INVALID_RESOURCE_ID = -1;
-    private static final float DOTVIEW_SIZE_FACTOR = 3;
+    private static final float ANIMATIONVIEW_SIZE_FACTOR = 3;
     private static final float DOTS_SIZE_FACTOR = .08f;
-    private static final float CIRCLEVIEW_SIZE_FACTOR = 1.4f;
 
     private @DrawableRes int imageResourceIdActive = INVALID_RESOURCE_ID;
     private @DrawableRes int imageResourceIdInactive = INVALID_RESOURCE_ID;
@@ -63,8 +61,7 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
     private @ColorInt int activeImageTint;
     private @ColorInt int inActiveImageTint;
 
-    private DotsView dotsView;
-    private CircleView circleView;
+    private SparkAnimationView sparkAnimationView;
     private ImageView imageView;
 
     private float animationSpeed = 1;
@@ -98,25 +95,16 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
 
     void init() {
 
-        int circleSize = (int) (imageSize * CIRCLEVIEW_SIZE_FACTOR);
-        int dotsSize = (int) (imageSize * DOTVIEW_SIZE_FACTOR);
+        int animationViewSize = (int) (imageSize * ANIMATIONVIEW_SIZE_FACTOR);
 
-        dotsView = new DotsView(getContext());
-        LayoutParams dotsViewLayoutParams = new LayoutParams(dotsSize, dotsSize, Gravity.CENTER);
-        dotsView.setLayoutParams(dotsViewLayoutParams);
+        sparkAnimationView = new SparkAnimationView(getContext());
+        LayoutParams dotsViewLayoutParams = new LayoutParams(animationViewSize, animationViewSize, Gravity.CENTER);
+        sparkAnimationView.setLayoutParams(dotsViewLayoutParams);
 
-        dotsView.setColors(secondaryColor, primaryColor);
-        dotsView.setMaxDotSize((int) (imageSize * DOTS_SIZE_FACTOR));
+        sparkAnimationView.setColors(secondaryColor, primaryColor);
+        sparkAnimationView.setMaxDotSize((int)(imageSize * DOTS_SIZE_FACTOR));
 
-        addView(dotsView);
-
-        circleView = new CircleView(getContext());
-        LayoutParams circleViewLayoutParams = new LayoutParams(circleSize, circleSize, Gravity.CENTER);
-        circleView.setLayoutParams(circleViewLayoutParams);
-
-        circleView.setColors(secondaryColor, primaryColor);
-
-        addView(circleView);
+        addView(sparkAnimationView);
 
         imageView = new AppCompatImageView(getContext());
         LayoutParams imageViewLayoutParams = new LayoutParams(imageSize, imageSize, Gravity.CENTER);
@@ -150,17 +138,17 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
         imageView.animate().cancel();
         imageView.setScaleX(0);
         imageView.setScaleY(0);
-        circleView.setInnerCircleRadiusProgress(0);
-        circleView.setOuterCircleRadiusProgress(0);
-        dotsView.setCurrentProgress(0);
+        sparkAnimationView.setInnerCircleRadiusProgress(0);
+        sparkAnimationView.setOuterCircleRadiusProgress(0);
+        sparkAnimationView.setCurrentProgress(0);
 
         animatorSet = new AnimatorSet();
 
-        ObjectAnimator outerCircleAnimator = ObjectAnimator.ofFloat(circleView, CircleView.OUTER_CIRCLE_RADIUS_PROGRESS, 0.1f, 1f);
+        ObjectAnimator outerCircleAnimator = ObjectAnimator.ofFloat(sparkAnimationView, SparkAnimationView.OUTER_CIRCLE_RADIUS_PROGRESS, 0.1f, 1f);
         outerCircleAnimator.setDuration((long) (250 / animationSpeed));
         outerCircleAnimator.setInterpolator(DECELERATE_INTERPOLATOR);
 
-        ObjectAnimator innerCircleAnimator = ObjectAnimator.ofFloat(circleView, CircleView.INNER_CIRCLE_RADIUS_PROGRESS, 0.1f, 1f);
+        ObjectAnimator innerCircleAnimator = ObjectAnimator.ofFloat(sparkAnimationView, SparkAnimationView.INNER_CIRCLE_RADIUS_PROGRESS, 0.1f, 1f);
         innerCircleAnimator.setDuration((long) (200 / animationSpeed));
         innerCircleAnimator.setStartDelay((long) (200 / animationSpeed));
         innerCircleAnimator.setInterpolator(DECELERATE_INTERPOLATOR);
@@ -175,7 +163,7 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
         starScaleXAnimator.setStartDelay((long) (250 / animationSpeed));
         starScaleXAnimator.setInterpolator(OVERSHOOT_INTERPOLATOR);
 
-        ObjectAnimator dotsAnimator = ObjectAnimator.ofFloat(dotsView, DotsView.DOTS_PROGRESS, 0, 1f);
+        ObjectAnimator dotsAnimator = ObjectAnimator.ofFloat(sparkAnimationView, SparkAnimationView.DOTS_PROGRESS, 0, 1f);
         dotsAnimator.setDuration((long) (900 / animationSpeed));
         dotsAnimator.setStartDelay((long) (50 / animationSpeed));
         dotsAnimator.setInterpolator(ACCELERATE_DECELERATE_INTERPOLATOR);
@@ -191,9 +179,9 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
         animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationCancel(Animator animation) {
-                circleView.setInnerCircleRadiusProgress(0);
-                circleView.setOuterCircleRadiusProgress(0);
-                dotsView.setCurrentProgress(0);
+                sparkAnimationView.setInnerCircleRadiusProgress(0);
+                sparkAnimationView.setOuterCircleRadiusProgress(0);
+                sparkAnimationView.setCurrentProgress(0);
                 imageView.setScaleX(1);
                 imageView.setScaleY(1);
             }
@@ -288,12 +276,10 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
                 animatorSet.cancel();
             }
             if (isChecked) {
-                circleView.setVisibility(View.VISIBLE);
-                dotsView.setVisibility(VISIBLE);
+                sparkAnimationView.setVisibility(VISIBLE);
                 playAnimation();
             } else {
-                dotsView.setVisibility(INVISIBLE);
-                circleView.setVisibility(View.GONE);
+                sparkAnimationView.setVisibility(INVISIBLE);
             }
         } else {
             playAnimation();
