@@ -27,7 +27,7 @@ import android.util.Property;
 import android.view.View;
 
 public class SparkAnimationView extends View {
-    private static final int DOTS_COUNT = 10;
+    private static final int DOTS_COUNT = 12;
     private static final int OUTER_DOTS_POSITION_ANGLE = 360 / DOTS_COUNT;
 
     private static final ArgbEvaluator argbEvaluator = new ArgbEvaluator();
