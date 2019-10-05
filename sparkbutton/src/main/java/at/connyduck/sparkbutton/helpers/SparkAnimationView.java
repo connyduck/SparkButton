@@ -54,8 +54,8 @@ public class SparkAnimationView extends View {
     private float currentDotSize2 = 0;
     private float currentRadius2 = 0;
 
-    private final Paint circlePaint = new Paint();
-    private final Paint maskPaint = new Paint();
+    private final Paint circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint maskPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private float outerCircleRadiusProgress = 0f;
     private float innerCircleRadiusProgress = 0f;
@@ -88,15 +88,10 @@ public class SparkAnimationView extends View {
 
         maxDotSize = Utils.dpToPx(getContext(), 4);
         for (int i = 0; i < dotsPaints.length; i++) {
-            dotsPaints[i] = new Paint();
-            dotsPaints[i].setStyle(Paint.Style.FILL);
-            dotsPaints[i].setAntiAlias(true);
+            dotsPaints[i] = new Paint(Paint.ANTI_ALIAS_FLAG);
         }
 
-        circlePaint.setStyle(Paint.Style.FILL);
-        circlePaint.setAntiAlias(true);
         maskPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-        maskPaint.setAntiAlias(true);
     }
 
     @Override
