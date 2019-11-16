@@ -21,7 +21,6 @@ import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.PorterDuff;
 import android.os.Build;
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
@@ -58,8 +57,6 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
     private @Px int imageSize;
     private @ColorInt int primaryColor;
     private @ColorInt int secondaryColor;
-    private @ColorInt int activeImageTint;
-    private @ColorInt int inActiveImageTint;
 
     private SparkAnimationView sparkAnimationView;
     private ImageView imageView;
@@ -115,10 +112,8 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
         if (imageResourceIdInactive != INVALID_RESOURCE_ID) {
             // should load inactive img first
             imageView.setImageResource(imageResourceIdInactive);
-            imageView.setColorFilter(inActiveImageTint, PorterDuff.Mode.SRC_ATOP);
         } else if (imageResourceIdActive != INVALID_RESOURCE_ID) {
             imageView.setImageResource(imageResourceIdActive);
-            imageView.setColorFilter(activeImageTint, PorterDuff.Mode.SRC_ATOP);
         } else {
             throw new IllegalArgumentException("One of Inactive/Active Image Resources is required!");
         }
@@ -247,7 +242,6 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
     public void setChecked(boolean flag) {
         isChecked = flag;
         imageView.setImageResource(isChecked ? imageResourceIdActive : imageResourceIdInactive);
-        imageView.setColorFilter(isChecked ? activeImageTint : inActiveImageTint, PorterDuff.Mode.SRC_ATOP);
     }
 
     public void setInactiveImage(int inactiveResource){
@@ -270,7 +264,6 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
             isChecked = !isChecked;
 
             imageView.setImageResource(isChecked ? imageResourceIdActive : imageResourceIdInactive);
-            imageView.setColorFilter(isChecked ? activeImageTint : inActiveImageTint, PorterDuff.Mode.SRC_ATOP);
 
             if (animatorSet != null) {
                 animatorSet.cancel();
@@ -326,8 +319,6 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
         imageResourceIdInactive = a.getResourceId(R.styleable.SparkButton_inactiveImage, INVALID_RESOURCE_ID);
         primaryColor = ContextCompat.getColor(getContext(), a.getResourceId(R.styleable.SparkButton_primaryColor, R.color.spark_primary_color));
         secondaryColor = ContextCompat.getColor(getContext(), a.getResourceId(R.styleable.SparkButton_secondaryColor, R.color.spark_secondary_color));
-        activeImageTint = ContextCompat.getColor(getContext(), a.getResourceId(R.styleable.SparkButton_activeImageTint, R.color.spark_image_tint));
-        inActiveImageTint = ContextCompat.getColor(getContext(), a.getResourceId(R.styleable.SparkButton_inactiveImageTint, R.color.spark_image_tint));
         animationSpeed = a.getFloat(R.styleable.SparkButton_animationSpeed, 1);
         // recycle typedArray
         a.recycle();

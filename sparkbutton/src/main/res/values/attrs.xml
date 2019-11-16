@@ -7,7 +7,5 @@
         <attr name="primaryColor" format="reference" />
         <attr name="secondaryColor" format="reference" />
         <attr name="animationSpeed" format="float" />
-        <attr name="activeImageTint" format="reference" />
-        <attr name="inactiveImageTint" format="reference" />
     </declare-styleable>
 </resources>
