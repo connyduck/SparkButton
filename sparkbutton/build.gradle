@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'com.github.connyduck'
-version = '2.0.1'
+version = '3.0.0'
 
 android {
     compileSdkVersion 29
@@ -13,7 +13,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 4
-        versionName "2.0.1"
+        versionName "3.0.0"
     }
     buildTypes {
         release {
