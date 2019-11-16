@@ -1,7 +1,10 @@
-apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
+plugins {
+    id 'com.android.library'
+    id 'maven-publish'
+}
 
 group = 'com.github.connyduck'
+version = '2.0.1'
 
 android {
     compileSdkVersion 29
@@ -27,6 +30,36 @@ android {
             it.enabled = false
         }
     }
+}
+
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier "sources"
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'sparkbutton'
+            artifact(sourceJar)
+            artifact("$buildDir/outputs/aar/sparkbutton-release.aar")
+            pom {
+                name = 'SparkButton'
+                description = 'Android library to create buttons with Twitter\'s heart like animation.'
+                url = 'https://github.com/connyduck/sparkbutton'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+            }
+        }
+    }
+}
+
+tasks.withType(PublishToMavenLocal) {
+    dependsOn build
 }
 
 dependencies {
