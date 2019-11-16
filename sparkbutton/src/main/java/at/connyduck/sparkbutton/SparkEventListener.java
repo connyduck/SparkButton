@@ -14,10 +14,6 @@
 
 package at.connyduck.sparkbutton;
 
-import android.widget.ImageView;
-
 public interface SparkEventListener {
-    void onEvent(ImageView button, boolean buttonState);
-    void onEventAnimationEnd(ImageView button,boolean buttonState);
-    void onEventAnimationStart(ImageView button,boolean buttonState);
+    void onEvent(SparkButton button, boolean buttonState);
 }

@@ -183,16 +183,10 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                if (listener != null) {
-                    listener.onEventAnimationEnd(imageView,isChecked);
-                }
             }
 
             @Override
             public void onAnimationStart(Animator animation) {
-                if (listener != null) {
-                    listener.onEventAnimationStart(imageView,isChecked);
-                }
             }
         });
 
@@ -278,7 +272,7 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
             playAnimation();
         }
         if (listener != null) {
-            listener.onEvent(imageView, isChecked);
+            listener.onEvent(this, isChecked);
         }
     }
 
