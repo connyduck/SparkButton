@@ -254,25 +254,26 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (imageResourceIdInactive != INVALID_RESOURCE_ID) {
-            isChecked = !isChecked;
+        boolean shouldPlayAnimation = listener == null || listener.onEvent(this, isChecked);
 
-            imageView.setImageResource(isChecked ? imageResourceIdActive : imageResourceIdInactive);
+        if(shouldPlayAnimation) {
+            if (imageResourceIdInactive != INVALID_RESOURCE_ID) {
+                isChecked = !isChecked;
 
-            if (animatorSet != null) {
-                animatorSet.cancel();
-            }
-            if (isChecked) {
-                sparkAnimationView.setVisibility(VISIBLE);
-                playAnimation();
+                imageView.setImageResource(isChecked ? imageResourceIdActive : imageResourceIdInactive);
+
+                if (animatorSet != null) {
+                    animatorSet.cancel();
+                }
+                if (isChecked) {
+                    sparkAnimationView.setVisibility(VISIBLE);
+                    playAnimation();
+                } else {
+                    sparkAnimationView.setVisibility(INVISIBLE);
+                }
             } else {
-                sparkAnimationView.setVisibility(INVISIBLE);
+                playAnimation();
             }
-        } else {
-            playAnimation();
-        }
-        if (listener != null) {
-            listener.onEvent(this, isChecked);
         }
     }
 

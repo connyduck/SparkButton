@@ -17,5 +17,5 @@ package at.connyduck.sparkbutton;
 import androidx.annotation.NonNull;
 
 public interface SparkEventListener {
-    void onEvent(@NonNull SparkButton button, boolean buttonState);
+    boolean onEvent(@NonNull SparkButton button, boolean buttonState);
 }
