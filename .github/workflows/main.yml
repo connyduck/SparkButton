@@ -1,0 +1,9 @@
+name: Gradle Wrapper Validation
+  uses: gradle/wrapper-validation-action@v1
+  with:
+    # Minimum expected wrapper JAR files
+    min-wrapper-count: # optional, default is 1
+    # Allow snapshot Gradle versions
+    allow-snapshots: # optional, default is false
+    # Allow arbitrary checksums, comma separated
+    allow-checksums: # optional, default is 
