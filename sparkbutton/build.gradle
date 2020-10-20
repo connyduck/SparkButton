@@ -7,11 +7,11 @@ group = 'com.github.connyduck'
 version = '3.0.0'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 29
+        targetSdkVersion 30
     }
     buildTypes {
         release {
