@@ -1,4 +1,4 @@
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/at.connyduck.sparkbutton/sparkbutton.svg)](https://maven-badges.herokuapp.com/maven-central/at.connyduck.sparkbutton/sparkbutton)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/at.connyduck.sparkbutton/sparkbutton-compose/badge.svg)](https://maven-badges.herokuapp.com/maven-central/at.connyduck.sparkbutton/sparkbutton-compose)
 
 # SparkButton Compose
 
@@ -9,10 +9,10 @@ Add the repository in your root build.gradle if you haven't already:
 
 ```kotlin
 allprojects {
-	repositories {
-		...
-		mavenCentral()
-	}
+    repositories {
+        ...
+        mavenCentral()
+    }
 }
 ```	
 Then add the dependency:
@@ -27,6 +27,6 @@ dependencies {
 ## Usage
 
 ## License
-Licensed under [Apache 2.0] (LICENSE.md)
+Licensed under [Apache 2.0](../LICENSE.md)
 
 
