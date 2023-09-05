@@ -148,23 +148,6 @@ public class SparkAnimationView extends View {
         return currentProgress;
     }
 
-    private void updateInnerDotsPosition() {
-        if (currentProgress < 0.3f) {
-            this.currentRadius2 = (float) Utils.mapValueFromRangeToRange(currentProgress, 0, 0.3f, 0.f, maxInnerDotsRadius);
-        } else {
-            this.currentRadius2 = maxInnerDotsRadius;
-        }
-
-        if (currentProgress < 0.2) {
-            this.currentDotSize2 = maxDotSize;
-        } else if (currentProgress < 0.5) {
-            this.currentDotSize2 = (float) Utils.mapValueFromRangeToRange(currentProgress, 0.2f, 0.5f, maxDotSize, 0.3 * maxDotSize);
-        } else {
-            this.currentDotSize2 = (float) Utils.mapValueFromRangeToRange(currentProgress, 0.5f, 1f, maxDotSize * 0.3f, 0);
-        }
-
-    }
-
     private void updateOuterDotsPosition() {
         if (currentProgress < 0.3f) {
             this.currentRadius1 = (float) Utils.mapValueFromRangeToRange(currentProgress, 0.0f, 0.3f, 0, maxOuterDotsRadius * 0.8f);
@@ -177,6 +160,23 @@ public class SparkAnimationView extends View {
         } else {
             this.currentDotSize1 = (float) Utils.mapValueFromRangeToRange(currentProgress, 0.7f, 1f, maxDotSize, 0);
         }
+    }
+
+    private void updateInnerDotsPosition() {
+        if (currentProgress < 0.3f) {
+            this.currentRadius2 = (float) Utils.mapValueFromRangeToRange(currentProgress, 0, 0.3f, 0.f, maxInnerDotsRadius);
+        } else {
+            this.currentRadius2 = maxInnerDotsRadius;
+        }
+
+        if (currentProgress < 0.2) {
+            this.currentDotSize2 = maxDotSize;
+        } else if (currentProgress < 0.5) {
+            this.currentDotSize2 = (float) Utils.mapValueFromRangeToRange(currentProgress, 0.2f, 0.5f, maxDotSize, 0.3f * maxDotSize);
+        } else {
+            this.currentDotSize2 = (float) Utils.mapValueFromRangeToRange(currentProgress, 0.5f, 1f, maxDotSize * 0.3f, 0f);
+        }
+
     }
 
     private void updateDotsPaints() {

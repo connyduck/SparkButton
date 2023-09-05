@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sparkbutton="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="vertical">
+
+                <at.connyduck.sparkbutton.SparkButton
+                    android:id="@+id/heart_button"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="40dp"
+                    sparkbutton:activeImage="@drawable/ic_heart_on"
+                    sparkbutton:iconSize="30dp"
+                    sparkbutton:inactiveImage="@drawable/ic_heart_off"
+                    sparkbutton:primaryColor="@color/heart_primary_color"
+                    sparkbutton:secondaryColor="@color/heart_secondary_color" />
+
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_button"
+
+        android:layout_width="300dp"
+        android:layout_height="300dp"/>
+</LinearLayout>

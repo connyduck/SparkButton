@@ -71,18 +71,10 @@ public class DemoActivity extends AppCompatActivity {
                 View view = getViewFromPosition(position);
                 if (view != null) {
                     switch (position) {
-                        case 0:
-                            playStarAnimation(view);
-                            break;
-                        case 1:
-                            playHeartAnimation(view);
-                            break;
-                        case 2:
-                            playFacebookAnimation(view);
-                            break;
-                        case 3:
-                            playTwitterAnimation(view);
-                            break;
+                        case 0 -> playStarAnimation(view);
+                        case 1 -> playHeartAnimation(view);
+                        case 2 -> playFacebookAnimation(view);
+                        case 3 -> playTwitterAnimation(view);
                     }
                 }
             }
