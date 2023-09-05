@@ -28,7 +28,6 @@ android {
     }
     publishing {
         singleVariant("release") {
-            // if you don't want sources/javadoc, remove these lines
             withSourcesJar()
             withJavadocJar()
         }
@@ -50,7 +49,7 @@ afterEvaluate {
             create<MavenPublication>("maven") {
                 groupId = "at.connyduck.sparkbutton"
                 artifactId = "sparkbutton-compose"
-                version = "0.1.0"
+                version = "1.0.0-alpha1"
 
                 from(components.findByName("release"))
 
