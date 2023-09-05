@@ -23,11 +23,9 @@ import at.connyduck.sparkbutton.helpers.Utils;
 
 @SuppressWarnings("unused")
 public class SparkButtonBuilder {
-    private SparkButton sparkButton;
-    private Context context;
+    private final SparkButton sparkButton;
 
     public SparkButtonBuilder(Context context) {
-        this.context = context;
         sparkButton = new SparkButton(context);
     }
 
@@ -57,7 +55,7 @@ public class SparkButtonBuilder {
     }
 
     public SparkButtonBuilder setImageSizeDp(int dp) {
-        sparkButton.setImageSize(Utils.dpToPx(context, dp));
+        sparkButton.setImageSize(Utils.dpToPx(sparkButton.getContext(), dp));
         return this;
     }
 

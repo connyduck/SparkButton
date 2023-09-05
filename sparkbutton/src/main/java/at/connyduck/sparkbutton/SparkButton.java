@@ -278,32 +278,29 @@ public class SparkButton extends FrameLayout implements View.OnClickListener {
     }
 
     private void setOnTouchListener() {
-        setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        imageView.animate().scaleX(0.8f).scaleY(0.8f).setDuration(150).setInterpolator(DECELERATE_INTERPOLATOR);
-                        setPressed(true);
-                        break;
+        setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    imageView.animate().scaleX(0.8f).scaleY(0.8f).setDuration(150).setInterpolator(DECELERATE_INTERPOLATOR);
+                    setPressed(true);
+                    break;
 
-                    case MotionEvent.ACTION_MOVE:
-                        break;
+                case MotionEvent.ACTION_MOVE:
+                    break;
 
-                    case MotionEvent.ACTION_UP:
-                        imageView.animate().scaleX(1).scaleY(1).setInterpolator(DECELERATE_INTERPOLATOR);
-                        if (isPressed()) {
-                            performClick();
-                            setPressed(false);
-                        }
-                        break;
+                case MotionEvent.ACTION_UP:
+                    imageView.animate().scaleX(1).scaleY(1).setInterpolator(DECELERATE_INTERPOLATOR);
+                    if (isPressed()) {
+                        performClick();
+                        setPressed(false);
+                    }
+                    break;
 
-                    case MotionEvent.ACTION_CANCEL:
-                        imageView.animate().scaleX(1).scaleY(1).setInterpolator(DECELERATE_INTERPOLATOR);
-                        break;
-                }
-                return true;
+                case MotionEvent.ACTION_CANCEL:
+                    imageView.animate().scaleX(1).scaleY(1).setInterpolator(DECELERATE_INTERPOLATOR);
+                    break;
             }
+            return true;
         });
     }
 
