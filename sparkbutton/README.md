@@ -1,4 +1,4 @@
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/at.connyduck.sparkbutton/sparkbutton.svg)](https://maven-badges.herokuapp.com/maven-central/at.connyduck.sparkbutton/sparkbutton)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/at.connyduck.sparkbutton/sparkbutton/badge.svg)](https://maven-badges.herokuapp.com/maven-central/at.connyduck.sparkbutton/sparkbutton)
 # SparkButton
 Highly customizable and lightweight library that allows you to create a button with sparkly animation effect.
 
@@ -12,10 +12,10 @@ Add the repository in your root build.gradle if you haven't already:
 
 ```kotlin
 allprojects {
-	repositories {
-		...
-		mavenCentral()
-	}
+    repositories {
+        ...
+        mavenCentral()
+    }
 }
 ```	
 Then add the dependency:
@@ -139,4 +139,4 @@ SparkButton is fork of [SparkButton](https://github.com/varunest/SparkButton) by
 It is mainly intended for use in [Tusky](https://github.com/tuskyapp/Tusky).
 
 ## License
-Licensed under [Apache 2.0] (LICENSE.md)
+Licensed under [Apache 2.0](../LICENSE.md)
