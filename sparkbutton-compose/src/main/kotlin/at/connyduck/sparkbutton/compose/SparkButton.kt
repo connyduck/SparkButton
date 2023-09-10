@@ -5,6 +5,7 @@ import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -12,6 +13,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Box
+import androidx.compose.material.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -33,6 +35,20 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
+/**
+ * A Button that shows an icon and plays a sparkly animation when clicked.
+ * @param icon the icon to show on the button
+ * @param active true if the spark animation should be played when the user clicks the button
+ * @param onClick Will be called when the user clicks the button
+ * @param modifier Modifier to be applied to the button
+ * @param interactionSource the [MutableInteractionSource] representing the stream of
+ * [Interaction]s for this Button. You can create and pass in your own remembered
+ * [MutableInteractionSource] if you want to observe [Interaction]s and customize the
+ * appearance / behavior of this Button in different [Interaction]s.
+ * @param primaryColor the primary color of the sparkles, defaults to #FFC107
+ * @param secondaryColor the secondary colo of the sparkles, defaults to #FF5722
+ * @param animationSpeed Set to a number between 0 and 1 to slow the animation down or to over 1 to speed it up. Defaults to 1 which equals a 1 second animation.
+ */
 @Composable
 public fun SparkButton(
     icon: Painter,
@@ -44,6 +60,10 @@ public fun SparkButton(
     secondaryColor: Color = Color(0xFFFF5722),
     animationSpeed: Float = 1.0f
 ) {
+
+    require(animationSpeed > 0f) {
+        "animationSpeed must be larger than 0"
+    }
 
     val primaryColorDark = remember(primaryColor) { primaryColor.darken(0.1f)}
     val secondaryColorDark = remember(secondaryColor) { secondaryColor.darken(0.1f)}
