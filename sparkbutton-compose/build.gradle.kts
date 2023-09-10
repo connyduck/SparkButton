@@ -4,6 +4,7 @@ plugins {
     `maven-publish`
     signing
     id("org.jlleitschuh.gradle.ktlint")
+    id("org.jetbrains.dokka")
 }
 
 android {
@@ -29,7 +30,6 @@ android {
     publishing {
         singleVariant("release") {
             withSourcesJar()
-            withJavadocJar()
         }
     }
     buildFeatures {
@@ -43,6 +43,12 @@ android {
     }
 }
 
+val javadocJar by tasks.registering(Jar::class) {
+    dependsOn(tasks.dokkaHtml)
+    archiveClassifier.set("javadoc")
+    from(tasks.dokkaHtml.get().outputDirectory.get())
+}
+
 afterEvaluate {
     publishing {
         publications {
@@ -52,6 +58,7 @@ afterEvaluate {
                 version = "1.0.0-alpha1"
 
                 from(components.findByName("release"))
+                artifact(javadocJar.get())
 
                 pom {
                     name.set("SparkButton")
