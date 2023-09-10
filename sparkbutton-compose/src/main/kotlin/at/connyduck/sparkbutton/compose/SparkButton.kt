@@ -256,11 +256,6 @@ public fun SparkButton(
 
 }
 
-public enum class AnimationMode {
-    AnimateOnActiveStateChange,
-    AnimateOnButtonClick
-}
-
 private const val DOT_COUNT = 12
 private const val DOT_POSITION_ANGLE: Float = 360f / DOT_COUNT
 
