@@ -8,7 +8,7 @@ Supported Api Level: 19+
 
 ## Dependency
 
-Add the repository in your root build.gradle if you haven't already:
+Add the repository in your root build.gradle.kts if you haven't already:
 
 ```kotlin
 allprojects {
