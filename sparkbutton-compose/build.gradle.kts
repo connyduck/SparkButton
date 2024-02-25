@@ -100,5 +100,5 @@ signing {
 }
 
 dependencies {
-    implementation("androidx.compose.foundation:foundation:1.4.3")
+    implementation("androidx.compose.foundation:foundation:1.6.2")
 }

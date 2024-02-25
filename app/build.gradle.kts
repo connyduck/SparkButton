@@ -37,7 +37,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.cardview:cardview:1.0.0")
 
-    implementation("androidx.compose.foundation:foundation:1.4.3")
+    implementation("androidx.compose.foundation:foundation:1.6.2")
 
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
