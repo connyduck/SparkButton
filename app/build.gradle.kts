@@ -33,7 +33,7 @@ dependencies {
     implementation(project(":sparkbutton"))
     implementation(project(":sparkbutton-compose"))
 
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.cardview:cardview:1.0.0")
 
