@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.library")
+    alias(libs.plugins.android.library)
     `maven-publish`
     signing
 }
@@ -7,7 +7,7 @@ plugins {
 android {
     namespace = "at.connyduck.sparkbutton"
 
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 19
@@ -79,5 +79,5 @@ signing {
 }
 
 dependencies {
-    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation(libs.androidx.appcompat)
 }

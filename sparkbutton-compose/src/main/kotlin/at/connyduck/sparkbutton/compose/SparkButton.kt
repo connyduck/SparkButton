@@ -24,11 +24,11 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * A Button that shows an icon and plays a sparkly animation when clicked.
@@ -55,31 +55,34 @@ public fun SparkButton(
     secondaryColor: Color = Color(0xFFFF5722),
     animationSpeed: Float = 1.0f
 ) {
-
     require(animationSpeed > 0f) {
         "animationSpeed must be larger than 0"
     }
 
-    val primaryColorDark = remember(primaryColor) { primaryColor.darken(0.1f)}
-    val secondaryColorDark = remember(secondaryColor) { secondaryColor.darken(0.1f)}
+    val primaryColorDark = remember(primaryColor) { primaryColor.darken(0.1f) }
+    val secondaryColorDark = remember(secondaryColor) { secondaryColor.darken(0.1f) }
 
     var buttonClicks: Int by remember { mutableStateOf(0) }
 
-    val imageScale = remember {
-        Animatable(1f)
-    }
+    val imageScale =
+        remember {
+            Animatable(1f)
+        }
 
-    val dotsRadiusProgress = remember {
-        Animatable(0.0f)
-    }
+    val dotsRadiusProgress =
+        remember {
+            Animatable(0.0f)
+        }
 
-    val dotsSizeProgress = remember {
-        Animatable(0.0f)
-    }
+    val dotsSizeProgress =
+        remember {
+            Animatable(0.0f)
+        }
 
-    val dotsSizeProgress2 = remember {
-        Animatable(0.0f)
-    }
+    val dotsSizeProgress2 =
+        remember {
+            Animatable(0.0f)
+        }
 
     LaunchedEffect(buttonClicks) {
         if (active) {
@@ -89,7 +92,8 @@ public fun SparkButton(
                 imageScale.snapTo(0.2f)
                 imageScale.animateTo(
                     targetValue = 1f,
-                    animationSpec = tween(
+                    animationSpec =
+                    tween(
                         durationMillis = (350 / animationSpeed).toInt(),
                         easing = OvershootEasing(4.0f)
                     )
@@ -99,7 +103,8 @@ public fun SparkButton(
             launch {
                 dotsRadiusProgress.animateTo(
                     targetValue = 1.0f,
-                    animationSpec = keyframes {
+                    animationSpec =
+                    keyframes {
                         0f at 0 with FastOutSlowInEasing
                         0.9f at (750 / animationSpeed).toInt() with SlowOutFastInEasing
                         1.0f at (1000 / animationSpeed).toInt()
@@ -112,7 +117,8 @@ public fun SparkButton(
             launch {
                 dotsSizeProgress.animateTo(
                     targetValue = 0f,
-                    animationSpec = keyframes {
+                    animationSpec =
+                    keyframes {
                         0f at 0 with FastOutSlowInEasing
                         1f at (450 / animationSpeed).toInt()
                         1f at (650 / animationSpeed).toInt() with SlowOutFastInEasing
@@ -125,7 +131,8 @@ public fun SparkButton(
             launch {
                 dotsSizeProgress2.animateTo(
                     targetValue = 0f,
-                    animationSpec = keyframes {
+                    animationSpec =
+                    keyframes {
                         0f at 0 with FastOutSlowInEasing
                         1f at (500 / animationSpeed).toInt() with SlowOutFastInEasing
                         0.0f at (1000 / animationSpeed).toInt()
@@ -138,26 +145,30 @@ public fun SparkButton(
 
     LaunchedEffect(Unit) {
         interactionSource.interactions.collect {
-            when(it) {
-                is PressInteraction.Press -> launch {
-                    imageScale.animateTo(
-                        targetValue = 0.8f,
-                        animationSpec = tween(
-                            durationMillis = 150,
-                            easing = LinearEasing
+            when (it) {
+                is PressInteraction.Press ->
+                    launch {
+                        imageScale.animateTo(
+                            targetValue = 0.8f,
+                            animationSpec =
+                            tween(
+                                durationMillis = 150,
+                                easing = LinearEasing
+                            )
                         )
-                    )
-                }
+                    }
                 is PressInteraction.Cancel -> imageScale.snapTo(1.0f)
-                is PressInteraction.Release -> if (!active) {
-                    imageScale.snapTo(1.0f)
-                } // else animation starts
+                is PressInteraction.Release ->
+                    if (!active) {
+                        imageScale.snapTo(1.0f)
+                    } // else animation starts
             }
         }
     }
 
     Box(
-        modifier = modifier
+        modifier =
+        modifier
             .clickable(
                 interactionSource = interactionSource,
                 indication = null,
@@ -167,7 +178,6 @@ public fun SparkButton(
                 }
             )
             .drawBehind {
-
                 val maxDotSize = this.size.maxDimension / 24
 
                 val maxOuterDotsRadius: Float = this.size.maxDimension * 1.5f
@@ -199,25 +209,38 @@ public fun SparkButton(
                         maxOuterDotsRadius / 4 * 3
                     )
 
-                val dotColors = if (dotsRadiusProgress.value < 0.5f) {
-                    val progress =
-                        mapValueFromRangeToRange(dotsRadiusProgress.value, 0.0f, 0.5f, 0.0f, 1.0f)
-                    listOf(
-                        primaryColor.interpolate(primaryColorDark, progress),
-                        primaryColorDark.interpolate(secondaryColor, progress),
-                        secondaryColor.interpolate(secondaryColorDark, progress),
-                        secondaryColorDark.interpolate(primaryColor, progress)
-                    )
-                } else {
-                    val progress =
-                        mapValueFromRangeToRange(dotsRadiusProgress.value, 0.5f, 1.0f, 0.0f, 1.0f)
-                    listOf(
-                        primaryColorDark.interpolate(primaryColor, progress),
-                        secondaryColor.interpolate(primaryColorDark, progress),
-                        secondaryColorDark.interpolate(secondaryColor, progress),
-                        primaryColor.interpolate(secondaryColorDark, progress)
-                    )
-                }
+                val dotColors =
+                    if (dotsRadiusProgress.value < 0.5f) {
+                        val progress =
+                            mapValueFromRangeToRange(
+                                dotsRadiusProgress.value,
+                                0.0f,
+                                0.5f,
+                                0.0f,
+                                1.0f
+                            )
+                        listOf(
+                            primaryColor.interpolate(primaryColorDark, progress),
+                            primaryColorDark.interpolate(secondaryColor, progress),
+                            secondaryColor.interpolate(secondaryColorDark, progress),
+                            secondaryColorDark.interpolate(primaryColor, progress)
+                        )
+                    } else {
+                        val progress =
+                            mapValueFromRangeToRange(
+                                dotsRadiusProgress.value,
+                                0.5f,
+                                1.0f,
+                                0.0f,
+                                1.0f
+                            )
+                        listOf(
+                            primaryColorDark.interpolate(primaryColor, progress),
+                            secondaryColor.interpolate(primaryColorDark, progress),
+                            secondaryColorDark.interpolate(secondaryColor, progress),
+                            primaryColor.interpolate(secondaryColorDark, progress)
+                        )
+                    }
 
                 // outer Dots
                 for (i in 0 until DOT_COUNT) {
@@ -258,17 +281,16 @@ public fun SparkButton(
                     )
                 }
             }
-    )
-    {
+    ) {
         Image(
             painter = icon,
             contentDescription = null,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .matchParentSize()
                 .scale(imageScale.value)
         )
     }
-
 }
 
 private const val DOT_COUNT = 12

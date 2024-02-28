@@ -49,11 +49,12 @@ class ScreenSlidePagerAdapter constructor(private val context: Context) : PagerA
                 setupTwitterLayoutClickEvents(view)
             }
             4 -> {
-                view = ComposeView(container.context).apply {
-                    setContent {
-                        ComposeDemo()
+                view =
+                    ComposeView(container.context).apply {
+                        setContent {
+                            ComposeDemo()
+                        }
                     }
-                }
             }
 
             else -> throw IllegalStateException()

@@ -1,0 +1,20 @@
+root = true
+
+[*]
+charset = utf-8
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{kt,kts}]
+
+ktlint_code_style = android_studio
+max_line_length = off
+
+# Composable functions should be allowed to start with an uppercase letter
+ktlint_function_naming_ignore_when_annotated_with=Composable
+
+# Disable trailing comma
+ktlint_standard_trailing-comma-on-call-site = disabled
+ktlint_standard_trailing-comma-on-declaration-site = disabled

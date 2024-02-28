@@ -24,7 +24,8 @@ fun ComposeDemo() {
         var selected1 by remember { mutableStateOf(false) }
 
         SparkButton(
-            icon = if (selected1) {
+            icon =
+            if (selected1) {
                 painterResource(R.drawable.ic_heart_on)
             } else {
                 painterResource(R.drawable.ic_heart_off)
@@ -33,7 +34,8 @@ fun ComposeDemo() {
             onClick = {
                 selected1 = !selected1
             },
-            modifier = Modifier
+            modifier =
+            Modifier
                 .padding(32.dp)
                 .size(32.dp)
                 .align(Alignment.CenterHorizontally)
@@ -45,7 +47,8 @@ fun ComposeDemo() {
             icon = painterResource(R.drawable.ic_thumb),
             active = true,
             onClick = { },
-            modifier = Modifier
+            modifier =
+            Modifier
                 .padding(32.dp)
                 .size(80.dp)
                 .align(Alignment.CenterHorizontally),
@@ -63,7 +66,8 @@ fun ComposeDemo() {
             onClick = {
                 selected2 = !selected2
             },
-            modifier = Modifier
+            modifier =
+            Modifier
                 .padding(32.dp)
                 .size(64.dp),
             animationSpeed = 0.1f

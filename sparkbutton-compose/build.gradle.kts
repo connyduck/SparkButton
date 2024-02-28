@@ -3,8 +3,8 @@ plugins {
     id("com.android.library")
     `maven-publish`
     signing
-    id("org.jlleitschuh.gradle.ktlint")
-    id("org.jetbrains.dokka")
+    alias(libs.plugins.ktlint)
+    alias(libs.plugins.dokka)
 }
 
 android {
@@ -82,7 +82,9 @@ afterEvaluate {
 
                     scm {
                         connection.set("scm:git:github.com/connyduck/sparkbutton.git")
-                        developerConnection.set("scm:git:ssh://github.com/connyduck/sparkbutton.git")
+                        developerConnection.set(
+                            "scm:git:ssh://github.com/connyduck/sparkbutton.git"
+                        )
                         url.set("https://github.com/connyduck/SparkButton")
                     }
                 }
@@ -100,5 +102,5 @@ signing {
 }
 
 dependencies {
-    implementation("androidx.compose.foundation:foundation:1.4.3")
+    implementation(libs.androidx.compose.foundation)
 }

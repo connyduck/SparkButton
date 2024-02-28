@@ -1,19 +1,11 @@
-buildscript {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-        google()
-    }
-    dependencies {
-        classpath("com.android.tools.build:gradle:8.1.1")
-        classpath("io.github.gradle-nexus:publish-plugin:1.3.0")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
-        classpath("org.jlleitschuh.gradle:ktlint-gradle:11.5.1")
-        classpath("org.jetbrains.dokka:dokka-gradle-plugin:1.9.10")
-    }
+plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin) apply false
+    alias(libs.plugins.ktlint)
+    alias(libs.plugins.dokka) apply false
+    id("io.github.gradle-nexus.publish-plugin") version libs.versions.publishPlugin
 }
-
-apply(plugin = "io.github.gradle-nexus.publish-plugin")
 
 allprojects {
     repositories {
@@ -27,3 +19,7 @@ tasks.register("clean", Delete::class.java) {
 }
 
 apply(from = "$rootDir/scripts/publish-root.gradle")
+
+configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+    version.set("1.1.1")
+}

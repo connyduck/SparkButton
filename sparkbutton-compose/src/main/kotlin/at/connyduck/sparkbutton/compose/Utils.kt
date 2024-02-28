@@ -17,9 +17,14 @@ internal fun Color.darken(amount: Float): Color {
     if (amount < 0f || amount > 1f) {
         throw IllegalArgumentException("amount must be between 0 and 1")
     }
-    val rgbColor =  this.convert(ColorSpaces.Srgb)
+    val rgbColor = this.convert(ColorSpaces.Srgb)
     val hsv = floatArrayOf(0f, 0f, 0f)
-    android.graphics.Color.RGBToHSV((rgbColor.red * 255).toInt(), (rgbColor.green * 255).toInt(), (rgbColor.blue * 255).toInt(), hsv)
+    android.graphics.Color.RGBToHSV(
+        (rgbColor.red * 255).toInt(),
+        (rgbColor.green * 255).toInt(),
+        (rgbColor.blue * 255).toInt(),
+        hsv
+    )
 
     return Color.hsv(hsv[0], hsv[1], hsv[2] * (1f - amount))
 }
