@@ -15,7 +15,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -62,27 +62,23 @@ public fun SparkButton(
     val primaryColorDark = remember(primaryColor) { primaryColor.darken(0.1f) }
     val secondaryColorDark = remember(secondaryColor) { secondaryColor.darken(0.1f) }
 
-    var buttonClicks: Int by remember { mutableStateOf(0) }
+    var buttonClicks: Int by remember { mutableIntStateOf(0) }
 
-    val imageScale =
-        remember {
-            Animatable(1f)
-        }
+    val imageScale = remember {
+        Animatable(1f)
+    }
 
-    val dotsRadiusProgress =
-        remember {
-            Animatable(0.0f)
-        }
+    val dotsRadiusProgress = remember {
+        Animatable(0.0f)
+    }
 
-    val dotsSizeProgress =
-        remember {
-            Animatable(0.0f)
-        }
+    val dotsSizeProgress = remember {
+        Animatable(0.0f)
+    }
 
-    val dotsSizeProgress2 =
-        remember {
-            Animatable(0.0f)
-        }
+    val dotsSizeProgress2 = remember {
+        Animatable(0.0f)
+    }
 
     LaunchedEffect(buttonClicks) {
         if (active) {
@@ -105,8 +101,8 @@ public fun SparkButton(
                     targetValue = 1.0f,
                     animationSpec =
                     keyframes {
-                        0f at 0 with FastOutSlowInEasing
-                        0.9f at (750 / animationSpeed).toInt() with SlowOutFastInEasing
+                        0f at 0 using FastOutSlowInEasing
+                        0.9f at (750 / animationSpeed).toInt() using SlowOutFastInEasing
                         1.0f at (1000 / animationSpeed).toInt()
                         durationMillis = (1000 / animationSpeed).toInt()
                     }
@@ -119,9 +115,9 @@ public fun SparkButton(
                     targetValue = 0f,
                     animationSpec =
                     keyframes {
-                        0f at 0 with FastOutSlowInEasing
+                        0f at 0 using FastOutSlowInEasing
                         1f at (450 / animationSpeed).toInt()
-                        1f at (650 / animationSpeed).toInt() with SlowOutFastInEasing
+                        1f at (650 / animationSpeed).toInt() using SlowOutFastInEasing
                         0.0f at (1000 / animationSpeed).toInt()
                         durationMillis = (1000 / animationSpeed).toInt()
                     }
@@ -133,8 +129,8 @@ public fun SparkButton(
                     targetValue = 0f,
                     animationSpec =
                     keyframes {
-                        0f at 0 with FastOutSlowInEasing
-                        1f at (500 / animationSpeed).toInt() with SlowOutFastInEasing
+                        0f at 0 using FastOutSlowInEasing
+                        1f at (500 / animationSpeed).toInt() using SlowOutFastInEasing
                         0.0f at (1000 / animationSpeed).toInt()
                         durationMillis = (1000 / animationSpeed).toInt()
                     }
