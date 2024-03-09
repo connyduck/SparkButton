@@ -6,24 +6,25 @@ import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.semantics.Role
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -32,29 +33,34 @@ import kotlinx.coroutines.launch
 
 /**
  * A Button that shows an icon and plays a sparkly animation when clicked.
- * @param icon the icon to show on the button
- * @param active true if the spark animation should be played when the user clicks the button
- * @param onClick Will be called when the user clicks the button
- * @param modifier Modifier to be applied to the button
+ * @param checked - whether this SparkButton is currently checked
+ * @param onCheckedChange - callback to be invoked when this SparkButton is selected
+ * @param enabled enabled whether or not this SparkButton will handle input events and appear
+ * enabled for semantics purposes
+ * @param modifier optional Modifier for this button
  * @param interactionSource the [MutableInteractionSource] representing the stream of
  * [Interaction]s for this Button. You can create and pass in your own remembered
  * [MutableInteractionSource] if you want to observe [Interaction]s and customize the
  * appearance / behavior of this Button in different [Interaction]s.
  * @param primaryColor the primary color of the sparkles, defaults to #FFC107
- * @param secondaryColor the secondary colo of the sparkles, defaults to #FF5722
+ * @param secondaryColor the secondary color of the sparkles, defaults to #FF5722
  * @param animationSpeed Set to a number between 0 and 1 to slow the animation down or to over 1 to speed it up. Defaults to 1 which equals a 1 second animation.
+ * @param content the content (icon) to be drawn inside the SparkButton.
  */
 @Composable
 public fun SparkButton(
-    icon: Painter,
-    active: Boolean,
-    onClick: () -> Unit,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     primaryColor: Color = Color(0xFFFFC107),
     secondaryColor: Color = Color(0xFFFF5722),
-    animationSpeed: Float = 1.0f
+    animationSpeed: Float = 1.0f,
+    content: @Composable () -> Unit
 ) {
+    println("button: $checked")
+
     require(animationSpeed > 0f) {
         "animationSpeed must be larger than 0"
     }
@@ -64,7 +70,7 @@ public fun SparkButton(
 
     var buttonClicks: Int by remember { mutableIntStateOf(0) }
 
-    val imageScale = remember {
+    val contentScale = remember {
         Animatable(1f)
     }
 
@@ -81,12 +87,12 @@ public fun SparkButton(
     }
 
     LaunchedEffect(buttonClicks) {
-        if (active) {
+        if (checked && buttonClicks > 0) {
             launch {
-                imageScale.snapTo(0.0f)
+                contentScale.snapTo(0.0f)
                 delay(timeMillis = (250 / animationSpeed).toLong())
-                imageScale.snapTo(0.2f)
-                imageScale.animateTo(
+                contentScale.snapTo(0.2f)
+                contentScale.animateTo(
                     targetValue = 1f,
                     animationSpec =
                     tween(
@@ -144,7 +150,7 @@ public fun SparkButton(
             when (it) {
                 is PressInteraction.Press ->
                     launch {
-                        imageScale.animateTo(
+                        contentScale.animateTo(
                             targetValue = 0.8f,
                             animationSpec =
                             tween(
@@ -153,11 +159,8 @@ public fun SparkButton(
                             )
                         )
                     }
-                is PressInteraction.Cancel -> imageScale.snapTo(1.0f)
-                is PressInteraction.Release ->
-                    if (!active) {
-                        imageScale.snapTo(1.0f)
-                    } // else animation starts
+                is PressInteraction.Cancel -> contentScale.snapTo(1.0f)
+                is PressInteraction.Release -> contentScale.snapTo(1.0f)
             }
         }
     }
@@ -165,12 +168,23 @@ public fun SparkButton(
     Box(
         modifier =
         modifier
-            .clickable(
+            .toggleable(
+                value = checked,
                 interactionSource = interactionSource,
+                enabled = enabled,
                 indication = null,
-                onClick = {
-                    onClick()
+                role = Role.Checkbox,
+                onValueChange = { newValue ->
+                    onCheckedChange(newValue)
                     buttonClicks++
+                }
+            )
+            .scale(contentScale.value)
+            .alpha(
+                if (enabled) {
+                    1f
+                } else {
+                    disabledAlpha
                 }
             )
             .drawBehind {
@@ -276,16 +290,10 @@ public fun SparkButton(
                         center = Offset(cX, cY)
                     )
                 }
-            }
+            },
+        contentAlignment = Alignment.Center
     ) {
-        Image(
-            painter = icon,
-            contentDescription = null,
-            modifier =
-            Modifier
-                .matchParentSize()
-                .scale(imageScale.value)
-        )
+        content()
     }
 }
 
@@ -293,3 +301,5 @@ private const val DOT_COUNT = 12
 private const val DOT_POSITION_ANGLE: Float = 360f / DOT_COUNT
 
 private val SlowOutFastInEasing = CubicBezierEasing(0.8f, 0.0f, 0.4f, 1.0f)
+
+private val disabledAlpha = 0.38f
