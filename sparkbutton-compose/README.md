@@ -14,7 +14,7 @@ allprojects {
         mavenCentral()
     }
 }
-```	
+```
 Then add the dependency:
 
 ```kotlin
@@ -26,22 +26,34 @@ dependencies {
 
 ## Usage
 ```kotlin
-var selected by remember { mutableStateOf(false) }
+var checked by remember { mutableStateOf(false) }
 
 SparkButton(
-    icon = if (selected1) {
-        painterResource(R.drawable.ic_heart_on)
-    } else {
-        painterResource(R.drawable.ic_heart_off)
-    },
-    active = selected,
-    onClick = {
-        selected = !selected
+    checked = checked,
+    onCheckedChange = { newValue ->
+        checked = newValue
     },
     modifier = Modifier
+        .padding(32.dp)
         .size(32.dp)
-)
+        .align(Alignment.CenterHorizontally)
+) {
+    if (checked) {
+        Image(
+            painterResource(R.drawable.ic_heart_filled),
+            stringResource(R.string.unlike)
+        )
+    } else {
+        Image(
+            painterResource(R.drawable.ic_heart),
+            stringResource(R.string.like)
+        )
+    }
+}
 ```
+
+see [ComposeDemo.kt](../app/src/main/java/at/connyduck/sparkbutton/sample/ComposeDemo.kt) for more examples.
+
 ### Customization
 
 The `SparkButton` Composable function has a few parameters to customize the spark animation:

@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import at.connyduck.sparkbutton.compose.SparkButton
 
@@ -28,7 +29,6 @@ fun ComposeDemo() {
             checked = checked1,
             onCheckedChange = {
                 checked1 = it
-                println("callback: $checked1")
             },
             modifier =
             Modifier
@@ -36,7 +36,6 @@ fun ComposeDemo() {
                 .size(32.dp)
                 .align(Alignment.CenterHorizontally)
         ) {
-            println("content: $checked1")
             if (checked1) {
                 Image(painterResource(R.drawable.ic_heart_on), null)
             } else {

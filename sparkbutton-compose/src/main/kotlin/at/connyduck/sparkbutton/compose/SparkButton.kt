@@ -59,8 +59,6 @@ public fun SparkButton(
     animationSpeed: Float = 1.0f,
     content: @Composable () -> Unit
 ) {
-    println("button: $checked")
-
     require(animationSpeed > 0f) {
         "animationSpeed must be larger than 0"
     }
