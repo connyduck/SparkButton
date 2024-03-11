@@ -1,12 +1,28 @@
+/* Copyright 2024 Conny Duck
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied.
+ * See the License for the specific language governing permissions and limitations under the License.
+ */
+
 package at.connyduck.sparkbutton.sample
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,64 +32,93 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import at.connyduck.sparkbutton.compose.SparkButton
 
 @Composable
 fun ComposeDemo() {
-    Column(Modifier.fillMaxWidth()) {
-        var checked1 by remember { mutableStateOf(false) }
+    Column(
+        Modifier.fillMaxWidth()
+    ) {
+        DemoRow(R.string.heart_standard_description) {
+            var checked1 by remember { mutableStateOf(false) }
 
-        SparkButton(
-            checked = checked1,
-            onCheckedChange = {
-                checked1 = it
-            },
-            animationSpeed = 0.1f,
-            modifier =
-            Modifier
-                .padding(64.dp)
-                .size(128.dp)
-                .align(Alignment.CenterHorizontally)
-        ) {
-            if (checked1) {
-                Image(painterResource(R.drawable.ic_heart_on), null)
-            } else {
-                Image(painterResource(R.drawable.ic_heart_off), null)
+            SparkButton(
+                checked = checked1,
+                onCheckedChange = {
+                    checked1 = it
+                },
+                modifier = Modifier
+                    .padding(16.dp)
+                    .size(32.dp)
+            ) {
+                if (checked1) {
+                    Image(painterResource(R.drawable.ic_heart_on), stringResource(R.string.unlike))
+                } else {
+                    Image(painterResource(R.drawable.ic_heart_off), stringResource(R.string.like))
+                }
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        SparkButton(
-            checked = true,
-            onCheckedChange = {},
-            enabled = false,
-            modifier =
-            Modifier
-                .padding(32.dp)
-                .size(32.dp)
-                .align(Alignment.CenterHorizontally)
-        ) {
-            Image(painterResource(R.drawable.ic_heart_on), null)
+        DemoRow(R.string.heart_disabled_description) {
+            SparkButton(
+                checked = true,
+                onCheckedChange = {},
+                enabled = false,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .size(32.dp)
+            ) {
+                Image(painterResource(R.drawable.ic_heart_on), null)
+            }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        DemoRow(R.string.thumbs_description) {
+            var checked2 by remember { mutableStateOf(true) }
 
-        var checked2 by remember { mutableStateOf(true) }
-
-        SparkButton(
-            checked = checked2,
-            onCheckedChange = { checked2 = it },
-            modifier =
-            Modifier
-                .padding(32.dp)
-                .size(80.dp)
-                .align(Alignment.CenterHorizontally),
-            primaryColor = colorResource(id = R.color.facebook_primary_color),
-            secondaryColor = colorResource(id = R.color.facebook_secondary_color),
-        ) {
-            Image(painter = painterResource(R.drawable.ic_thumb), contentDescription = "")
+            SparkButton(
+                checked = true,
+                onCheckedChange = { checked2 = it },
+                modifier = Modifier
+                    .padding(32.dp)
+                    .size(64.dp)
+                    .align(Alignment.CenterHorizontally),
+                primaryColor = colorResource(id = R.color.thumb_primary_color),
+                secondaryColor = colorResource(id = R.color.thumb_secondary_color),
+                animationSpeed = 0.5f
+            ) {
+                Image(painter = painterResource(R.drawable.ic_thumb), contentDescription = stringResource(R.string.thumbs_up))
+            }
         }
     }
+}
+
+@Composable
+fun DemoRow(
+    @StringRes text: Int,
+    content: @Composable () -> Unit
+) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 32.dp, vertical = 16.dp)
+    ) {
+        Text(
+            text = stringResource(id = text),
+            fontSize = 16.sp,
+            modifier = Modifier.weight(1f)
+        )
+        content()
+    }
+}
+
+@Preview
+@Composable
+fun ComposeDemoPreview() {
+    ComposeDemo()
 }

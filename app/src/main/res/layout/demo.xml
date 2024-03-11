@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sparkbutton="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="32dp"
+        android:paddingVertical="16dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/heart_standard_description"
+            android:textSize="16sp" />
+
+        <at.connyduck.sparkbutton.SparkButton
+            android:id="@+id/heart_button"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="16dp"
+            android:clipToPadding="false"
+            sparkbutton:activeImage="@drawable/ic_heart_on"
+            sparkbutton:iconSize="32dp"
+            sparkbutton:inactiveImage="@drawable/ic_heart_off" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="32dp"
+        android:paddingVertical="16dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="16dp"
+            android:text="@string/thumbs_description"
+            android:textSize="16sp" />
+
+        <at.connyduck.sparkbutton.SparkButton
+            android:id="@+id/thumbs_up_button"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="16dp"
+            android:clipToPadding="false"
+            sparkbutton:activeImage="@drawable/ic_thumb"
+            sparkbutton:animationSpeed="0.5"
+            sparkbutton:iconSize="32dp"
+            sparkbutton:inactiveImage="@drawable/ic_thumb"
+            sparkbutton:primaryColor="@color/thumb_primary_color"
+            sparkbutton:secondaryColor="@color/thumb_secondary_color" />
+
+    </LinearLayout>
+
+</LinearLayout>
