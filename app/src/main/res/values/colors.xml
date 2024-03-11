@@ -9,4 +9,7 @@
     <color name="facebook_primary_color">#dfe3ee</color>
     <color name="twitter_primary_color">#667580</color>
     <color name="twitter_secondary_color">#CCD6DD</color>
+
+    <color name="ic_launcher_background">#0C295E</color>
+
 </resources>

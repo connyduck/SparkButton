@@ -29,10 +29,11 @@ fun ComposeDemo() {
             onCheckedChange = {
                 checked1 = it
             },
+            animationSpeed = 0.1f,
             modifier =
             Modifier
-                .padding(32.dp)
-                .size(32.dp)
+                .padding(64.dp)
+                .size(128.dp)
                 .align(Alignment.CenterHorizontally)
         ) {
             if (checked1) {
