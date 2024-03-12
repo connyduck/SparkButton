@@ -20,7 +20,7 @@ Then add the dependency:
 ```kotlin
 dependencies {
     ...
-    implementation("at.connyduck.sparkbutton:sparkbutton-compose:1.0.0")
+    implementation("at.connyduck.sparkbutton:sparkbutton-compose:<version>")
 }
 ```
 
@@ -33,20 +33,17 @@ SparkButton(
     onCheckedChange = { newValue ->
         checked = newValue
     },
-    modifier = Modifier
-        .padding(32.dp)
-        .size(32.dp)
-        .align(Alignment.CenterHorizontally)
+    modifier = Modifier.size(32.dp)
 ) {
     if (checked) {
-        Image(
-            painterResource(R.drawable.ic_heart_filled),
-            stringResource(R.string.unlike)
+        Icon(
+            painter = painterResource(R.drawable.ic_heart_filled),
+            contentDescription = stringResource(R.string.unlike)
         )
     } else {
         Image(
-            painterResource(R.drawable.ic_heart),
-            stringResource(R.string.like)
+            painter = painterResource(R.drawable.ic_heart),
+            contentDescription = stringResource(R.string.like)
         )
     }
 }
