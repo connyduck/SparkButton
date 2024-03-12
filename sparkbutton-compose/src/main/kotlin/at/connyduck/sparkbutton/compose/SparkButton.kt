@@ -90,11 +90,11 @@ public fun SparkButton(
         Animatable(0.0f)
     }
 
-    val dotsSizeProgress = remember {
+    val largeDotSizeProgress = remember {
         Animatable(0.0f)
     }
 
-    val dotsSizeProgress2 = remember {
+    val smallDotSizeProgress = remember {
         Animatable(0.0f)
     }
 
@@ -129,7 +129,7 @@ public fun SparkButton(
             }
 
             launch {
-                dotsSizeProgress.animateTo(
+                largeDotSizeProgress.animateTo(
                     targetValue = 0f,
                     animationSpec =
                     keyframes {
@@ -143,7 +143,7 @@ public fun SparkButton(
             }
 
             launch {
-                dotsSizeProgress2.animateTo(
+                smallDotSizeProgress.animateTo(
                     targetValue = 0f,
                     animationSpec =
                     keyframes {
@@ -178,8 +178,7 @@ public fun SparkButton(
     }
 
     Box(
-        modifier =
-        modifier
+        modifier = modifier
             .toggleable(
                 value = checked,
                 interactionSource = interactionSource,
@@ -196,7 +195,7 @@ public fun SparkButton(
                 if (enabled) {
                     1f
                 } else {
-                    disabledAlpha
+                    DISABLED_ALPHA
                 }
             )
             .drawBehind {
@@ -204,7 +203,7 @@ public fun SparkButton(
 
                 val maxOuterDotsRadius: Float = this.size.maxDimension * 1.5f
 
-                val currentRadius1: Float =
+                val outerDotsRadius: Float =
                     mapValueFromRangeToRange(
                         dotsRadiusProgress.value,
                         0.0f,
@@ -213,7 +212,7 @@ public fun SparkButton(
                         maxOuterDotsRadius
                     )
 
-                val currentRadius2: Float =
+                val middleDotsRadius: Float =
                     mapValueFromRangeToRange(
                         dotsRadiusProgress.value,
                         0.0f,
@@ -222,7 +221,7 @@ public fun SparkButton(
                         maxOuterDotsRadius / 8 * 7
                     )
 
-                val currentRadius3: Float =
+                val innerDotsRadius: Float =
                     mapValueFromRangeToRange(
                         dotsRadiusProgress.value,
                         0.0f,
@@ -231,74 +230,71 @@ public fun SparkButton(
                         maxOuterDotsRadius / 4 * 3
                     )
 
-                val dotColors =
-                    if (dotsRadiusProgress.value < 0.5f) {
-                        val progress =
-                            mapValueFromRangeToRange(
-                                dotsRadiusProgress.value,
-                                0.0f,
-                                0.5f,
-                                0.0f,
-                                1.0f
-                            )
-                        listOf(
-                            primaryColor.interpolate(primaryColorDark, progress),
-                            primaryColorDark.interpolate(secondaryColor, progress),
-                            secondaryColor.interpolate(secondaryColorDark, progress),
-                            secondaryColorDark.interpolate(primaryColor, progress)
-                        )
-                    } else {
-                        val progress =
-                            mapValueFromRangeToRange(
-                                dotsRadiusProgress.value,
-                                0.5f,
-                                1.0f,
-                                0.0f,
-                                1.0f
-                            )
-                        listOf(
-                            primaryColorDark.interpolate(primaryColor, progress),
-                            secondaryColor.interpolate(primaryColorDark, progress),
-                            secondaryColorDark.interpolate(secondaryColor, progress),
-                            primaryColor.interpolate(secondaryColorDark, progress)
-                        )
-                    }
+                val dotColors = if (dotsRadiusProgress.value < 0.5f) {
+                    val progress = mapValueFromRangeToRange(
+                        dotsRadiusProgress.value,
+                        0.0f,
+                        0.5f,
+                        0.0f,
+                        1.0f
+                    )
+                    listOf(
+                        primaryColor.interpolate(primaryColorDark, progress),
+                        primaryColorDark.interpolate(secondaryColor, progress),
+                        secondaryColor.interpolate(secondaryColorDark, progress),
+                        secondaryColorDark.interpolate(primaryColor, progress)
+                    )
+                } else {
+                    val progress = mapValueFromRangeToRange(
+                        dotsRadiusProgress.value,
+                        0.5f,
+                        1.0f,
+                        0.0f,
+                        1.0f
+                    )
+                    listOf(
+                        primaryColorDark.interpolate(primaryColor, progress),
+                        secondaryColor.interpolate(primaryColorDark, progress),
+                        secondaryColorDark.interpolate(secondaryColor, progress),
+                        primaryColor.interpolate(secondaryColorDark, progress)
+                    )
+                }
 
                 // outer Dots
                 for (i in 0 until DOT_COUNT) {
                     val cX: Float =
-                        (center.x + currentRadius1 * cos(i * DOT_POSITION_ANGLE * PI / 180f)).toFloat()
+                        (center.x + outerDotsRadius * cos(i * DOT_POSITION_ANGLE * PI / 180f)).toFloat()
                     val cY: Float =
-                        (center.y + currentRadius1 * sin(i * DOT_POSITION_ANGLE * PI / 180f)).toFloat()
+                        (center.y + outerDotsRadius * sin(i * DOT_POSITION_ANGLE * PI / 180f)).toFloat()
                     drawCircle(
                         color = dotColors[i % dotColors.size],
-                        radius = dotsSizeProgress2.value * maxDotSize,
+                        radius = smallDotSizeProgress.value * maxDotSize,
                         center = Offset(cX, cY)
                     )
                 }
 
-                // innerDots
+                // middle Dots (larger)
                 for (i in 0 until DOT_COUNT) {
                     val cX: Float =
-                        (center.x + currentRadius2 * cos((i * DOT_POSITION_ANGLE - DOT_POSITION_ANGLE / 2f) * PI / 180f)).toFloat()
+                        (center.x + middleDotsRadius * cos((i * DOT_POSITION_ANGLE - DOT_POSITION_ANGLE / 2f) * PI / 180f)).toFloat()
                     val cY: Float =
-                        (center.y + currentRadius2 * sin((i * DOT_POSITION_ANGLE - DOT_POSITION_ANGLE / 2f) * PI / 180f)).toFloat()
+                        (center.y + middleDotsRadius * sin((i * DOT_POSITION_ANGLE - DOT_POSITION_ANGLE / 2f) * PI / 180f)).toFloat()
                     drawCircle(
                         color = dotColors[(i + 1) % dotColors.size],
-                        radius = dotsSizeProgress.value * 2 * maxDotSize,
+                        radius = largeDotSizeProgress.value * 2 * maxDotSize,
                         center = Offset(cX, cY)
                     )
                 }
 
-                // innerDots
+                // inner Dots
                 for (i in 0 until DOT_COUNT) {
                     val cX: Float =
-                        (center.x + currentRadius3 * cos((i * DOT_POSITION_ANGLE) * PI / 180f)).toFloat()
+                        (center.x + innerDotsRadius * cos((i * DOT_POSITION_ANGLE) * PI / 180f)).toFloat()
                     val cY: Float =
-                        (center.y + currentRadius3 * sin((i * DOT_POSITION_ANGLE) * PI / 180f)).toFloat()
+                        (center.y + innerDotsRadius * sin((i * DOT_POSITION_ANGLE) * PI / 180f)).toFloat()
                     drawCircle(
                         color = dotColors[(i + 1) % dotColors.size],
-                        radius = dotsSizeProgress2.value * maxDotSize,
+                        radius = smallDotSizeProgress.value * maxDotSize,
                         center = Offset(cX, cY)
                     )
                 }
@@ -314,4 +310,4 @@ private const val DOT_POSITION_ANGLE: Float = 360f / DOT_COUNT
 
 private val SlowOutFastInEasing = CubicBezierEasing(0.8f, 0.0f, 0.4f, 1.0f)
 
-private val disabledAlpha = 0.38f
+private const val DISABLED_ALPHA = 0.38f
