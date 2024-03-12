@@ -99,6 +99,8 @@ public fun SparkButton(
     }
 
     LaunchedEffect(buttonClicks) {
+        dotsRadiusProgress.snapTo(0.0f)
+
         if (checked && buttonClicks > 0) {
             launch {
                 contentScale.snapTo(0.0f)
@@ -117,8 +119,7 @@ public fun SparkButton(
             launch {
                 dotsRadiusProgress.animateTo(
                     targetValue = 1.0f,
-                    animationSpec =
-                    keyframes {
+                    animationSpec = keyframes {
                         0f at 0 using FastOutSlowInEasing
                         0.9f at (750 / animationSpeed).toInt() using SlowOutFastInEasing
                         1.0f at (1000 / animationSpeed).toInt()
@@ -131,8 +132,7 @@ public fun SparkButton(
             launch {
                 largeDotSizeProgress.animateTo(
                     targetValue = 0f,
-                    animationSpec =
-                    keyframes {
+                    animationSpec = keyframes {
                         0f at 0 using FastOutSlowInEasing
                         1f at (450 / animationSpeed).toInt()
                         1f at (650 / animationSpeed).toInt() using SlowOutFastInEasing
@@ -145,8 +145,7 @@ public fun SparkButton(
             launch {
                 smallDotSizeProgress.animateTo(
                     targetValue = 0f,
-                    animationSpec =
-                    keyframes {
+                    animationSpec = keyframes {
                         0f at 0 using FastOutSlowInEasing
                         1f at (500 / animationSpeed).toInt() using SlowOutFastInEasing
                         0.0f at (1000 / animationSpeed).toInt()
