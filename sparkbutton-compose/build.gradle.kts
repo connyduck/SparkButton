@@ -10,7 +10,7 @@ plugins {
 android {
     namespace = "at.connyduck.sparkbutton.compose"
 
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 19
