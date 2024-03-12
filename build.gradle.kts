@@ -19,7 +19,3 @@ tasks.register("clean", Delete::class.java) {
 }
 
 apply(from = "$rootDir/scripts/publish-root.gradle")
-
-configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
-    version.set("1.1.1")
-}
