@@ -41,7 +41,7 @@ SparkButton(
             contentDescription = stringResource(R.string.unlike)
         )
     } else {
-        Image(
+        Icon(
             painter = painterResource(R.drawable.ic_heart),
             contentDescription = stringResource(R.string.like)
         )
