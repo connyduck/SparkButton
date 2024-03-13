@@ -44,18 +44,18 @@ fun ComposeDemo() {
         Modifier.fillMaxWidth()
     ) {
         DemoRow(R.string.heart_standard_description) {
-            var checked1 by remember { mutableStateOf(false) }
+            var checked by remember { mutableStateOf(false) }
 
             SparkButton(
-                checked = checked1,
+                checked = checked,
                 onCheckedChange = {
-                    checked1 = it
+                    checked = it
                 },
                 modifier = Modifier
                     .padding(16.dp)
                     .size(32.dp)
             ) {
-                if (checked1) {
+                if (checked) {
                     Image(painterResource(R.drawable.ic_heart_on), stringResource(R.string.unlike))
                 } else {
                     Image(painterResource(R.drawable.ic_heart_off), stringResource(R.string.like))
@@ -77,11 +77,11 @@ fun ComposeDemo() {
         }
 
         DemoRow(R.string.thumbs_description) {
-            var checked2 by remember { mutableStateOf(true) }
+            var checked by remember { mutableStateOf(true) }
 
             SparkButton(
-                checked = true,
-                onCheckedChange = { checked2 = it },
+                checked = checked,
+                onCheckedChange = { checked = it },
                 modifier = Modifier
                     .padding(32.dp)
                     .size(64.dp)

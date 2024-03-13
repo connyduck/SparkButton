@@ -108,8 +108,7 @@ public fun SparkButton(
                 contentScale.snapTo(0.2f)
                 contentScale.animateTo(
                     targetValue = 1f,
-                    animationSpec =
-                    tween(
+                    animationSpec = tween(
                         durationMillis = (350 / animationSpeed).toInt(),
                         easing = OvershootEasing(4.0f)
                     )

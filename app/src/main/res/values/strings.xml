@@ -2,7 +2,7 @@
     <string name="app_name">SparkButton Demo App</string>
     <string name="like">Like</string>
     <string name="unlike">Unlike</string>
-    <string name="thumbs_up">Tumbs up!</string>
+    <string name="thumbs_up">Thumbs up!</string>
     <string name="views">Views</string>
     <string name="compose">Compose</string>
     <string name="heart_standard_description">Standard Heart Button</string>
