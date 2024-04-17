@@ -1,6 +1,6 @@
 [versions]
 agp = "8.3.2"
-androidxActivityCompose = "1.8.2"
+androidxActivityCompose = "1.9.0"
 androidxAppcompat = "1.6.1"
 androidxCompose = "1.6.6"
 androidxComposeCompiler = "1.5.10"
