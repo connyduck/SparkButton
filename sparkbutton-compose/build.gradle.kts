@@ -5,6 +5,7 @@ plugins {
     signing
     alias(libs.plugins.ktlint)
     alias(libs.plugins.dokka)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -34,9 +35,6 @@ android {
     }
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
     }
     kotlinOptions {
         freeCompilerArgs += "-Xexplicit-api=strict"

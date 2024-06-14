@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.ktlint)
     alias(libs.plugins.dokka) apply false
     id("io.github.gradle-nexus.publish-plugin") version libs.versions.publishPlugin
+    alias(libs.plugins.compose.compiler) apply false
 }
 
 allprojects {

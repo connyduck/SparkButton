@@ -2,14 +2,13 @@
 agp = "8.5.0"
 androidxActivityCompose = "1.9.0"
 androidxAppcompat = "1.7.0"
-androidxCompose = "1.6.7"
-androidxComposeCompiler = "1.5.10"
+androidxCompose = "1.6.8"
 androidxCore = "1.13.1"
-composeBom = "2024.05.00"
+composeBom = "2024.06.00"
 dokka = "1.9.20"
-kotlin = "1.9.22"
+kotlin = "2.0.0"
 ktlint = "12.1.1"
-publishPlugin = "1.3.0"
+publishPlugin = "2.0.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -17,6 +16,7 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 [libraries]
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppcompat" }
