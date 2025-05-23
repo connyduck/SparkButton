@@ -7,7 +7,7 @@ androidxCore = "1.13.1"
 composeBom = "2024.06.00"
 dokka = "1.9.20"
 kotlin = "2.0.0"
-ktlint = "12.1.1"
+ktlint = "12.3.0"
 publishPlugin = "2.0.0"
 
 [plugins]
