@@ -2,7 +2,7 @@
 agp = "8.5.0"
 androidxActivityCompose = "1.9.0"
 androidxAppcompat = "1.7.0"
-androidxCompose = "1.6.8"
+androidxCompose = "1.8.3"
 androidxCore = "1.13.1"
 composeBom = "2024.06.00"
 dokka = "1.9.20"
