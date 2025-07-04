@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
+
 plugins {
     kotlin("android")
     id("com.android.library")
@@ -36,15 +38,15 @@ android {
     buildFeatures {
         compose = true
     }
-    kotlinOptions {
-        freeCompilerArgs += "-Xexplicit-api=strict"
+    kotlin {
+        explicitApi = ExplicitApiMode.Strict
     }
 }
 
 val javadocJar by tasks.registering(Jar::class) {
-    dependsOn(tasks.dokkaHtml)
+    dependsOn(tasks.dokkaGenerate)
     archiveClassifier.set("javadoc")
-    from(tasks.dokkaHtml.get().outputDirectory.get())
+    from(tasks.dokkaGeneratePublicationHtml.flatMap { it.outputDirectory })
 }
 
 afterEvaluate {

@@ -7,7 +7,7 @@ plugins {
 android {
     namespace = "at.connyduck.sparkbutton"
 
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 19
@@ -20,12 +20,14 @@ android {
     lint {
         abortOnError = false
     }
-
     publishing {
         singleVariant("release") {
             withSourcesJar()
             withJavadocJar()
         }
+    }
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
     }
 }
 

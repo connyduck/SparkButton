@@ -7,20 +7,16 @@ plugins {
 
 android {
     namespace = "at.connyduck.sparkbutton.sample"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "at.connyduck.sparkbutton.sample"
         minSdk = 21
-        targetSdk = 34
+        targetSdk = 36
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     lint {
         abortOnError = false
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         compose = true
