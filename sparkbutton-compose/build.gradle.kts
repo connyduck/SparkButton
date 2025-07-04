@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     kotlin("android")
@@ -13,7 +14,7 @@ plugins {
 android {
     namespace = "at.connyduck.sparkbutton.compose"
 
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 19
@@ -40,6 +41,9 @@ android {
     }
     kotlin {
         explicitApi = ExplicitApiMode.Strict
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_17
+        }
     }
 }
 
