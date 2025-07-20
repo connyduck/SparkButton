@@ -7,5 +7,7 @@
     <string name="compose">Compose</string>
     <string name="heart_standard_description">Standard Heart Button</string>
     <string name="heart_disabled_description">Disabled Heart Button</string>
+    <string name="heart_slow_description">Heart Button with slow animation</string>
     <string name="thumbs_description">Thumbs-Up Button with modified colors and animation speed</string>
+    <string name="text_description">Text Button</string>
 </resources>

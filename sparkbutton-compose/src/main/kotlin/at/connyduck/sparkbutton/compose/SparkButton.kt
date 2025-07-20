@@ -20,17 +20,16 @@ import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.selection.toggleable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -45,13 +44,25 @@ import kotlin.math.sin
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@Composable
+public fun rememberSparkButtonState(): SparkButtonState = remember { SparkButtonState() }
+
+@ConsistentCopyVisibility
+public data class SparkButtonState internal constructor(
+    internal var clicks: MutableState<Int> = mutableIntStateOf(0)
+) {
+    public fun animate() {
+        clicks.value++
+    }
+}
+
 /**
  * A Button that shows an icon and plays a sparkly animation when clicked.
- * @param checked - whether this SparkButton is currently checked
- * @param onCheckedChange - callback to be invoked when this SparkButton is selected
+ * @param onClick - callback invoked when this SparkButton is clicked
+ * @param modifier optional Modifier for this button
+ * @param state The state of this button. Can be used to trigger the animation without click.
  * @param enabled enabled whether or not this SparkButton will handle input events and appear
  * enabled for semantics purposes
- * @param modifier optional Modifier for this button
  * @param interactionSource the [MutableInteractionSource] representing the stream of
  * [Interaction]s for this Button. You can create and pass in your own remembered
  * [MutableInteractionSource] if you want to observe [Interaction]s and customize the
@@ -63,10 +74,11 @@ import kotlinx.coroutines.launch
  */
 @Composable
 public fun SparkButton(
-    checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
+    onClick: () -> Unit?,
     modifier: Modifier = Modifier,
+    animateOnClick: Boolean = true,
     enabled: Boolean = true,
+    state: SparkButtonState = rememberSparkButtonState(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     primaryColor: Color = Color(0xFFFFC107),
     secondaryColor: Color = Color(0xFFFF5722),
@@ -79,8 +91,6 @@ public fun SparkButton(
 
     val primaryColorDark = remember(primaryColor) { primaryColor.darken(0.1f) }
     val secondaryColorDark = remember(secondaryColor) { secondaryColor.darken(0.1f) }
-
-    var buttonClicks: Int by remember { mutableIntStateOf(0) }
 
     val contentScale = remember {
         Animatable(1f)
@@ -98,10 +108,10 @@ public fun SparkButton(
         Animatable(0.0f)
     }
 
-    LaunchedEffect(buttonClicks) {
+    LaunchedEffect(state.clicks.value) {
         dotsRadiusProgress.snapTo(0.0f)
 
-        if (checked && buttonClicks > 0) {
+        if (state.clicks.value > 0) {
             launch {
                 contentScale.snapTo(0.0f)
                 delay(timeMillis = (250 / animationSpeed).toLong())
@@ -155,7 +165,7 @@ public fun SparkButton(
         }
     }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(interactionSource) {
         interactionSource.interactions.collect {
             when (it) {
                 is PressInteraction.Press ->
@@ -177,15 +187,16 @@ public fun SparkButton(
 
     Box(
         modifier = modifier
-            .toggleable(
-                value = checked,
+            .clickable(
                 interactionSource = interactionSource,
                 enabled = enabled,
                 indication = null,
-                role = Role.Checkbox,
-                onValueChange = { newValue ->
-                    onCheckedChange(newValue)
-                    buttonClicks++
+                role = Role.Button,
+                onClick = {
+                    onClick()
+                    if (animateOnClick) {
+                        state.animate()
+                    }
                 }
             )
             .scale(contentScale.value)

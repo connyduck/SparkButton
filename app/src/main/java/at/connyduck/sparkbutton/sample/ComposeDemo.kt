@@ -16,6 +16,7 @@ package at.connyduck.sparkbutton.sample
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,6 +39,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import at.connyduck.sparkbutton.compose.SparkButton
+import at.connyduck.sparkbutton.compose.rememberSparkButtonState
+import kotlinx.coroutines.delay
 
 @Composable
 fun ComposeDemo() {
@@ -44,16 +48,21 @@ fun ComposeDemo() {
         Modifier.fillMaxWidth()
     ) {
         DemoRow(R.string.heart_standard_description) {
+            val sparkButtonState = rememberSparkButtonState()
             var checked by remember { mutableStateOf(false) }
 
+            val interactionSource = remember { MutableInteractionSource() }
+
             SparkButton(
-                checked = checked,
-                onCheckedChange = {
-                    checked = it
+                animateOnClick = !checked,
+                onClick = {
+                    checked = !checked
                 },
+                state = sparkButtonState,
                 modifier = Modifier
                     .padding(16.dp)
-                    .size(32.dp)
+                    .size(32.dp),
+                interactionSource = interactionSource
             ) {
                 if (checked) {
                     Image(painterResource(R.drawable.ic_heart_on), stringResource(R.string.unlike))
@@ -61,12 +70,17 @@ fun ComposeDemo() {
                     Image(painterResource(R.drawable.ic_heart_off), stringResource(R.string.like))
                 }
             }
+
+            LaunchedEffect(Unit) {
+                delay(3000)
+                checked = true
+                sparkButtonState.animate()
+            }
         }
 
         DemoRow(R.string.heart_disabled_description) {
             SparkButton(
-                checked = true,
-                onCheckedChange = {},
+                onClick = {},
                 enabled = false,
                 modifier = Modifier
                     .padding(16.dp)
@@ -76,12 +90,21 @@ fun ComposeDemo() {
             }
         }
 
-        DemoRow(R.string.thumbs_description) {
-            var checked by remember { mutableStateOf(true) }
-
+        DemoRow(R.string.heart_slow_description) {
             SparkButton(
-                checked = checked,
-                onCheckedChange = { checked = it },
+                onClick = {},
+                modifier = Modifier
+                    .padding(16.dp)
+                    .size(32.dp),
+                animationSpeed = 0.2f
+            ) {
+                Image(painterResource(R.drawable.ic_heart_on), null)
+            }
+        }
+
+        DemoRow(R.string.thumbs_description) {
+            SparkButton(
+                onClick = { },
                 modifier = Modifier
                     .padding(32.dp)
                     .size(64.dp)
@@ -91,6 +114,20 @@ fun ComposeDemo() {
                 animationSpeed = 0.5f
             ) {
                 Image(painter = painterResource(R.drawable.ic_thumb), contentDescription = stringResource(R.string.thumbs_up))
+            }
+        }
+
+        DemoRow(R.string.text_description) {
+            SparkButton(
+                onClick = { },
+                modifier = Modifier
+                    .padding(16.dp)
+                    .align(Alignment.CenterHorizontally),
+                primaryColor = colorResource(id = R.color.thumb_primary_color),
+                secondaryColor = colorResource(id = R.color.thumb_secondary_color),
+                animationSpeed = 0.5f
+            ) {
+                Text("Click me!", fontSize = 24.sp)
             }
         }
     }
