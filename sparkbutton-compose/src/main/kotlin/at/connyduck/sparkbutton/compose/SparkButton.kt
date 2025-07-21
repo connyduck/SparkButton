@@ -37,6 +37,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.semantics.Role
 import kotlin.math.PI
 import kotlin.math.cos
@@ -108,8 +109,18 @@ public fun SparkButton(
         Animatable(0.0f)
     }
 
+    val outerCircleProgress = remember {
+        Animatable(0.0f)
+    }
+
+    val innerCircleProgress = remember {
+        Animatable(0.0f)
+    }
+
     LaunchedEffect(state.clicks.value) {
         dotsRadiusProgress.snapTo(0.0f)
+        outerCircleProgress.snapTo(0.0f)
+        innerCircleProgress.snapTo(0.0f)
 
         if (state.clicks.value > 0) {
             launch {
@@ -162,6 +173,29 @@ public fun SparkButton(
                     }
                 )
             }
+
+            launch {
+                outerCircleProgress.animateTo(
+                    targetValue = 1f,
+                    animationSpec = keyframes {
+                        0.1f at 0 using DecelerateEasing
+                        1f at (250 / animationSpeed).toInt()
+                        durationMillis = (250 / animationSpeed).toInt()
+                    }
+                )
+            }
+
+            launch {
+                innerCircleProgress.animateTo(
+                    targetValue = 1f,
+                    animationSpec = keyframes {
+                        0f at 0
+                        0f at (200 / animationSpeed).toInt() using DecelerateEasing
+                        1f at (400 / animationSpeed).toInt()
+                        durationMillis = (400 / animationSpeed).toInt()
+                    }
+                )
+            }
         }
     }
 
@@ -199,7 +233,6 @@ public fun SparkButton(
                     }
                 }
             )
-            .scale(contentScale.value)
             .alpha(
                 if (enabled) {
                     1f
@@ -211,6 +244,8 @@ public fun SparkButton(
                 val maxDotSize = this.size.maxDimension / 24
 
                 val maxOuterDotsRadius: Float = this.size.maxDimension * 1.5f
+
+                val maxCircleRadius: Float = this.size.maxDimension / 4 * 3
 
                 val outerDotsRadius: Float =
                     mapValueFromRangeToRange(
@@ -307,7 +342,22 @@ public fun SparkButton(
                         center = Offset(cX, cY)
                     )
                 }
-            },
+
+                // center Circle
+                if (outerCircleProgress.value > innerCircleProgress.value) {
+                    val strokeWidth = (outerCircleProgress.value - innerCircleProgress.value) * maxCircleRadius
+                    val color = secondaryColor.interpolate(primaryColor, innerCircleProgress.value)
+                    println("radius ${outerCircleProgress.value * maxCircleRadius - strokeWidth / 2} strokeWidth $strokeWidth innerCircleProgress ${innerCircleProgress.value}")
+
+                    drawCircle(
+                        color = color,
+                        radius = outerCircleProgress.value * maxCircleRadius - strokeWidth / 2,
+                        center = center,
+                        style = Stroke(strokeWidth)
+                    )
+                }
+            }
+            .scale(contentScale.value),
         contentAlignment = Alignment.Center
     ) {
         content()

@@ -16,7 +16,6 @@ package at.connyduck.sparkbutton.sample
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -51,8 +50,6 @@ fun ComposeDemo() {
             val sparkButtonState = rememberSparkButtonState()
             var checked by remember { mutableStateOf(false) }
 
-            val interactionSource = remember { MutableInteractionSource() }
-
             SparkButton(
                 animateOnClick = !checked,
                 onClick = {
@@ -61,8 +58,7 @@ fun ComposeDemo() {
                 state = sparkButtonState,
                 modifier = Modifier
                     .padding(16.dp)
-                    .size(32.dp),
-                interactionSource = interactionSource
+                    .size(32.dp)
             ) {
                 if (checked) {
                     Image(painterResource(R.drawable.ic_heart_on), stringResource(R.string.unlike))
@@ -96,7 +92,7 @@ fun ComposeDemo() {
                 modifier = Modifier
                     .padding(16.dp)
                     .size(32.dp),
-                animationSpeed = 0.2f
+                animationSpeed = 0.1f
             ) {
                 Image(painterResource(R.drawable.ic_heart_on), null)
             }
