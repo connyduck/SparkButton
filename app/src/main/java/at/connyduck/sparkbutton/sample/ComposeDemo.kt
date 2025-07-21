@@ -123,7 +123,36 @@ fun ComposeDemo() {
                 secondaryColor = colorResource(id = R.color.thumb_secondary_color),
                 animationSpeed = 0.5f
             ) {
-                Text("Click me!", fontSize = 24.sp)
+                Text("Click me!", fontSize = 18.sp)
+            }
+        }
+
+        DemoRow(R.string.heart_small_description) {
+            var checked by remember { mutableStateOf(false) }
+
+            SparkButton(
+                animateOnClick = !checked,
+                onClick = {
+                    checked = !checked
+                },
+                contentSize = 24.dp,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .size(48.dp)
+            ) {
+                if (checked) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_heart_on),
+                        contentDescription = stringResource(R.string.unlike),
+                        modifier = Modifier.size(24.dp)
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(R.drawable.ic_heart_off),
+                        contentDescription = stringResource(R.string.like),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
         }
     }

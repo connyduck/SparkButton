@@ -21,7 +21,6 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Box
@@ -39,6 +38,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.Dp
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -59,19 +59,18 @@ public data class SparkButtonState internal constructor(
 
 /**
  * A Button that shows an icon and plays a sparkly animation when clicked.
- * @param onClick - callback invoked when this SparkButton is clicked
- * @param modifier optional Modifier for this button
+ * @param onClick Callback invoked when this SparkButton is clicked.
+ * @param modifier Optional Modifier for this button.
+ * @param enabled Whether or not this SparkButton will handle input events and appear
+ * enabled for semantics purposes.
  * @param state The state of this button. Can be used to trigger the animation without click.
- * @param enabled enabled whether or not this SparkButton will handle input events and appear
- * enabled for semantics purposes
- * @param interactionSource the [MutableInteractionSource] representing the stream of
- * [Interaction]s for this Button. You can create and pass in your own remembered
- * [MutableInteractionSource] if you want to observe [Interaction]s and customize the
- * appearance / behavior of this Button in different [Interaction]s.
- * @param primaryColor the primary color of the sparkles, defaults to #FFC107
- * @param secondaryColor the secondary color of the sparkles, defaults to #FF5722
- * @param animationSpeed Set to a number between 0 and 1 to slow the animation down or to over 1 to speed it up. Defaults to 1 which equals a 1 second animation.
- * @param content the content (icon) to be drawn inside the SparkButton.
+ * @param contentSize The size of the content the animation should be based on. Defaults to the SparkButton's size when not set.
+ * Useful to scale the animation, e.g. when there is additional padding around the content.
+ * @param primaryColor The primary color of the sparkles, defaults to #FFC107
+ * @param secondaryColor The secondary color of the sparkles, defaults to #FF5722
+ * @param animationSpeed Set to a number between 0 and 1 to slow the animation down or to over 1 to speed it up.
+ * Defaults to 1 which equals a 1 second animation.
+ * @param content The content (icon) to be drawn inside the SparkButton.
  */
 @Composable
 public fun SparkButton(
@@ -80,7 +79,7 @@ public fun SparkButton(
     animateOnClick: Boolean = true,
     enabled: Boolean = true,
     state: SparkButtonState = rememberSparkButtonState(),
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    contentSize: Dp? = null,
     primaryColor: Color = Color(0xFFFFC107),
     secondaryColor: Color = Color(0xFFFF5722),
     animationSpeed: Float = 1.0f,
@@ -199,6 +198,8 @@ public fun SparkButton(
         }
     }
 
+    val interactionSource = remember { MutableInteractionSource() }
+
     LaunchedEffect(interactionSource) {
         interactionSource.interactions.collect {
             when (it) {
@@ -241,11 +242,12 @@ public fun SparkButton(
                 }
             )
             .drawBehind {
-                val maxDotSize = this.size.maxDimension / 24
+                val size = contentSize?.toPx() ?: this.size.maxDimension
+                val maxDotSize = size / 24
 
-                val maxOuterDotsRadius: Float = this.size.maxDimension * 1.5f
+                val maxOuterDotsRadius: Float = size * 1.5f
 
-                val maxCircleRadius: Float = this.size.maxDimension / 4 * 3
+                val maxCircleRadius: Float = size / 4 * 3
 
                 val outerDotsRadius: Float =
                     mapValueFromRangeToRange(
@@ -345,9 +347,10 @@ public fun SparkButton(
 
                 // center Circle
                 if (outerCircleProgress.value > innerCircleProgress.value) {
+                    // The stroke is drawn on top of the radius so that half of it is outside and half is inside,
+                    // but we would need it to be completely inside so we do some additional calculations.
                     val strokeWidth = (outerCircleProgress.value - innerCircleProgress.value) * maxCircleRadius
                     val color = secondaryColor.interpolate(primaryColor, innerCircleProgress.value)
-                    println("radius ${outerCircleProgress.value * maxCircleRadius - strokeWidth / 2} strokeWidth $strokeWidth innerCircleProgress ${innerCircleProgress.value}")
 
                     drawCircle(
                         color = color,
