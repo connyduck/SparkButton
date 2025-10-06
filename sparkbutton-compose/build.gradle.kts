@@ -59,7 +59,7 @@ afterEvaluate {
             create<MavenPublication>("maven") {
                 groupId = "at.connyduck.sparkbutton"
                 artifactId = "sparkbutton-compose"
-                version = "1.0.0-alpha2"
+                version = "1.0.0-beta1"
 
                 from(components.findByName("release"))
                 artifact(javadocJar.get())

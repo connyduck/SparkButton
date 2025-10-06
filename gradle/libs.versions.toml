@@ -1,13 +1,13 @@
 [versions]
-agp = "8.11.0"
-androidxActivityCompose = "1.10.1"
+agp = "8.13.0"
+androidxActivityCompose = "1.11.0"
 androidxAppcompat = "1.7.1"
-androidxCompose = "1.8.3"
-androidxCore = "1.16.0"
-composeBom = "2025.06.01"
+androidxCompose = "1.9.2"
+androidxCore = "1.17.0"
+composeBom = "2025.09.01"
 dokka = "2.0.0"
-kotlin = "2.2.0"
-ktlint = "12.3.0"
+kotlin = "2.2.20"
+ktlint = "13.1.0"
 publishPlugin = "2.0.0"
 
 [plugins]
