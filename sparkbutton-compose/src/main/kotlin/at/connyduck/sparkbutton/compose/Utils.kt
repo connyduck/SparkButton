@@ -9,9 +9,7 @@ internal fun mapValueFromRangeToRange(
     fromHigh: Float,
     toLow: Float,
     toHigh: Float
-): Float {
-    return toLow + (value - fromLow) / (fromHigh - fromLow) * (toHigh - toLow)
-}
+): Float = toLow + (value - fromLow) / (fromHigh - fromLow) * (toHigh - toLow)
 
 internal fun Color.darken(amount: Float): Color {
     if (amount < 0f || amount > 1f) {

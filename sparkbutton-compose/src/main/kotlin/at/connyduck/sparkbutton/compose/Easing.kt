@@ -14,7 +14,5 @@ internal class OvershootEasing(
 
 /** an easing similar to DecelerateInterpolator */
 internal object DecelerateEasing : Easing {
-    override fun transform(fraction: Float): Float {
-        return (1.0f - (1.0f - fraction) * (1.0f - fraction))
-    }
+    override fun transform(fraction: Float): Float = (1.0f - (1.0f - fraction) * (1.0f - fraction))
 }
