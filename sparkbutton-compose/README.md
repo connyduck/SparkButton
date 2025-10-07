@@ -29,9 +29,9 @@ dependencies {
 var checked by remember { mutableStateOf(false) }
 
 SparkButton(
-    checked = checked,
-    onCheckedChange = { newValue ->
-        checked = newValue
+    animateOnClick = !checked,
+    onClick = {
+        checked = !checked
     },
     modifier = Modifier.size(32.dp)
 ) {
@@ -55,6 +55,7 @@ see [ComposeDemo.kt](../app/src/main/java/at/connyduck/sparkbutton/sample/Compos
 
 The `SparkButton` Composable function has a few parameters to customize the spark animation:
 
+- `contentSize`: To adjust the size of the animation.
 - `primaryColor`/`secondaryColor`: Use these to customize the color of the sparks. For best results they should be colors that go well together, e.g. yellow and orange, or light and dark blue.
 - `animationSpeed`: Set to a number between 0 and 1 to slow the animation down or to over 1 to speed it up. Defaults to 1 which equals a 1 second animation.
 
