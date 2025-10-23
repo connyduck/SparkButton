@@ -6,7 +6,7 @@ androidxCompose = "1.9.2"
 androidxCore = "1.17.0"
 composeBom = "2025.09.01"
 dokka = "2.0.0"
-kotlin = "2.2.20"
+kotlin = "2.2.21"
 ktlint = "13.1.0"
 publishPlugin = "2.0.0"
 
