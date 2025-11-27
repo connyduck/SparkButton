@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "at.connyduck.sparkbutton.sample"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 36
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
