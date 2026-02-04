@@ -1,8 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("android")
     id("com.android.library")
     `maven-publish`
     signing
@@ -41,9 +39,6 @@ android {
     }
     kotlin {
         explicitApi = ExplicitApiMode.Strict
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_17
-        }
     }
 }
 

@@ -1,8 +1,5 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.android.application)
-    kotlin("android")
     alias(libs.plugins.ktlint)
     alias(libs.plugins.compose.compiler)
 }
@@ -26,11 +23,6 @@ android {
     }
     buildFeatures {
         compose = true
-    }
-    kotlin {
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_17
-        }
     }
 }
 
